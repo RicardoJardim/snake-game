@@ -1,0 +1,24 @@
+{
+  "name": "snakegame",
+  "version": "1.0.0",
+  "description": "snake game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b ./tsconfig.json",
+    "watch": "tsc watch - tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RicardoJardim/snake-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RicardoJardim/snake-game/issues"
+  },
+  "homepage": "https://github.com/RicardoJardim/snake-game#readme",
+  "dependencies": {
+    "typescript": "^4.5.4"
+  }
+}
