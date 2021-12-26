@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES6",
+    "removeComments": true,
+    "preserveConstEnums": true,
     "module": "commonjs",
+    "allowJs": true,
     "sourceMap": true,
+    "rootDir": "./src",
+    "downlevelIteration": true,
     "outDir": "./public/"
   },
   "include": ["src/**/*"],
