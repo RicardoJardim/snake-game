@@ -20,6 +20,8 @@ class Game {
   static snake: Snake;
   apple: IGameObject;
 
+  GameID: number;
+
   constructor(
     canvas: HTMLCanvasElement,
     canvasContext: CanvasRenderingContext2D,
@@ -34,16 +36,29 @@ class Game {
   }
 
   gameLoop(callback: Function): void {
-    let Gameid = setInterval(() => {
-      if (Game.snake.die == true) {
-        clearInterval(Gameid);
-        let endgame: EndGame = { won: true, message: "morreu" };
+    let size =
+      (this.canvas.width * this.canvas.height) /
+      (Game.snake.size * Game.snake.size);
+
+    console.log(size);
+    this.GameID = setInterval(() => {
+      if (Game.snake.die) {
+        this.stopGame();
+        let endgame: EndGame = { won: false, message: "Dead" };
+        callback(endgame);
+      } else if (Game.snake.tail.length >= size) {
+        this.stopGame();
+        let endgame: EndGame = { won: true, message: "You won the game" };
         callback(endgame);
       } else {
         this.update();
         this.draw();
       }
     }, 1000 / 10);
+  }
+
+  stopGame(): void {
+    clearInterval(this.GameID);
   }
 
   movementEvents(event: KeyboardEvent): void {
@@ -254,18 +269,48 @@ const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 const canvasContext: CanvasRenderingContext2D = canvas.getContext("2d");
 const score: HTMLElement = document.getElementById("score");
 
+var game: Game;
+
 window.onload = () => {
-  var game = new Game(canvas, canvasContext, score);
-
-  game.gameLoop((data: EndGame) => {
-    if (!data.won) {
-      alert("FAILED: " + data.message);
-    } else {
-      alert(data.message);
-    }
-  });
-
   window.addEventListener("keydown", (event) => {
     game.movementEvents(event);
   });
 };
+
+function startgame() {
+  if (game != null) {
+    game.stopGame();
+    game = null;
+  }
+  game = new Game(canvas, canvasContext, score);
+
+  game.gameLoop((data: EndGame) => {
+    if (!data.won) {
+      writeCanvas(data.message, "red");
+    } else {
+      writeCanvas(data.message, "green");
+    }
+  });
+}
+
+function writeCanvas(message, color) {
+  canvasContext.save();
+
+  canvasContext.font = "48px Arial";
+
+  canvasContext.textBaseline = "top";
+
+  canvasContext.fillStyle = color;
+
+  let width = canvasContext.measureText(message).width;
+
+  let x = canvas.width / 2 - width / 2;
+
+  canvasContext.fillRect(x, 100, width, parseInt("48px Arial", 10));
+
+  canvasContext.fillStyle = "#fff";
+
+  canvasContext.fillText(message, x, 100);
+
+  canvasContext.restore();
+}

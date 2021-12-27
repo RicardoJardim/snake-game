@@ -7,10 +7,18 @@ class Game {
         this.apple = new Apple(this.canvasContext, this.canvas, Game.snake.size);
     }
     gameLoop(callback) {
-        let Gameid = setInterval(() => {
-            if (Game.snake.die == true) {
-                clearInterval(Gameid);
-                let endgame = { won: true, message: "morreu" };
+        let size = (this.canvas.width * this.canvas.height) /
+            (Game.snake.size * Game.snake.size);
+        console.log(size);
+        this.GameID = setInterval(() => {
+            if (Game.snake.die) {
+                this.stopGame();
+                let endgame = { won: false, message: "Dead" };
+                callback(endgame);
+            }
+            else if (Game.snake.tail.length >= size) {
+                this.stopGame();
+                let endgame = { won: true, message: "You won the game" };
                 callback(endgame);
             }
             else {
@@ -18,6 +26,9 @@ class Game {
                 this.draw();
             }
         }, 1000 / 10);
+    }
+    stopGame() {
+        clearInterval(this.GameID);
     }
     movementEvents(event) {
         if (event.key == "ArrowLeft" && Game.snake.rotateX != 1) {
@@ -157,18 +168,37 @@ function createRect(canvasContext, x, y, width, height, color) {
 const canvas = document.getElementById("canvas");
 const canvasContext = canvas.getContext("2d");
 const score = document.getElementById("score");
+var game;
 window.onload = () => {
-    var game = new Game(canvas, canvasContext, score);
-    game.gameLoop((data) => {
-        if (!data.won) {
-            alert("FAILED: " + data.message);
-        }
-        else {
-            alert(data.message);
-        }
-    });
     window.addEventListener("keydown", (event) => {
         game.movementEvents(event);
     });
 };
+function startgame() {
+    if (game != null) {
+        game.stopGame();
+        game = null;
+    }
+    game = new Game(canvas, canvasContext, score);
+    game.gameLoop((data) => {
+        if (!data.won) {
+            writeCanvas(data.message, "red");
+        }
+        else {
+            writeCanvas(data.message, "green");
+        }
+    });
+}
+function writeCanvas(message, color) {
+    canvasContext.save();
+    canvasContext.font = "48px Arial";
+    canvasContext.textBaseline = "top";
+    canvasContext.fillStyle = color;
+    let width = canvasContext.measureText(message).width;
+    let x = canvas.width / 2 - width / 2;
+    canvasContext.fillRect(x, 100, width, parseInt("48px Arial", 10));
+    canvasContext.fillStyle = "#fff";
+    canvasContext.fillText(message, x, 100);
+    canvasContext.restore();
+}
 //# sourceMappingURL=main.js.map

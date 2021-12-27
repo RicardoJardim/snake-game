@@ -3,21 +3,29 @@
     <title>Snake Game</title>
   </head>
 
-  <body>
-    <div
-      style="
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 400px;
-        font: 20px Arial;
-      "
-    >
-      <span style="padding: 15px"> Snake Game </span>
-      <span style="padding: 15px"> Score <span id="score"> 0 </span> </span>
+  <body style="display: flex; justify-content: center; font: 20px Arial">
+    <div id="container" style="margin-top: 5em">
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 400px;
+        "
+      >
+        <span style="padding: 15px"> Snake Game </span>
+        <span style="padding: 15px"> Score <span id="score"> 0 </span> </span>
+      </div>
+      <canvas id="canvas" width="400" height="400"></canvas>
+      <div style="display: flex; flex-direction: row; width: 400px">
+        <button
+          onclick="startgame()"
+          style="margin: 15px; padding: 5px 15px; font: 14px Arial"
+        >
+          Start / Reset
+        </button>
+      </div>
     </div>
-    <canvas id="canvas" width="400" height="400"></canvas>
-
     <script src="./main.js"></script>
   </body>
 </html>
