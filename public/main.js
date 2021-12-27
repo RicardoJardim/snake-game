@@ -174,11 +174,12 @@ window.onload = () => {
         game.movementEvents(event);
     });
 };
-function startgame() {
+function startgame(el) {
     if (game != null) {
         game.stopGame();
         game = null;
     }
+    el.innerText = "Reset";
     game = new Game(canvas, canvasContext, score);
     game.gameLoop((data) => {
         if (!data.won) {

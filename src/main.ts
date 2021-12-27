@@ -277,11 +277,12 @@ window.onload = () => {
   });
 };
 
-function startgame() {
+function startgame(el: HTMLElement) {
   if (game != null) {
     game.stopGame();
     game = null;
   }
+  el.innerText = "Reset";
   game = new Game(canvas, canvasContext, score);
 
   game.gameLoop((data: EndGame) => {
