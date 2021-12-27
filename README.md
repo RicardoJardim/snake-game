@@ -1,5 +1,10 @@
-Snake game
+# Snake game using Typescript and webpack to compress files
 
-Ctrl + Shif + B ( Build OR Watch )
+- npm run start
+- - Start dev watch webpack local server :9000
 
-Test: file:///E:/Dev/snake%20game/public/index.html
+- npm run dev
+- - Compile using webpack in dev mode
+
+- npm run build
+- - Compile using webpack in prod mode

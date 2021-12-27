@@ -1,0 +1,22 @@
+.MainContainer {
+  display: flex;
+  justify-content: center;
+  font: 20px Arial;
+}
+
+.RowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
+
+button {
+  margin: 15px;
+  padding: 5px 15px;
+  font: 14px Arial;
+}
+
+.Padd_15 {
+  padding: 15px;
+}

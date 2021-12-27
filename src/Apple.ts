@@ -6,36 +6,26 @@ export class Apple implements IGameObject {
   y: number;
   color: string;
   size: number;
-  canvasContext;
-  canvas;
-  constructor(canvasContext, canvas, snake) {
+  canvasContext: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
+  constructor(
+    canvasContext: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+    size: number
+  ) {
     this.canvasContext = canvasContext;
-    let isTouching;
+    this.canvas = canvas;
+    this.size = size;
+    this.size = this.size;
 
-    while (true) {
-      isTouching = false;
-      this.x =
-        Math.floor((Math.random() * canvas.width) / snake.size) * snake.size;
-      this.y =
-        Math.floor((Math.random() * canvas.height) / snake.size) * snake.size;
+    this.x =
+      Math.floor((Math.random() * this.canvas.width) / this.size) * this.size;
+    this.y =
+      Math.floor((Math.random() * this.canvas.height) / this.size) * this.size;
 
-      for (let i = 0; i < snake.tail.length; i++) {
-        if (this.x == snake.tail[i].x && this.y == snake.tail[i].y) {
-          isTouching = true;
-        }
-      }
-
-      this.size = snake.size;
-      this.color = "red";
-
-      if (!isTouching) {
-        break;
-      }
-    }
+    this.color = "red";
   }
-  update(): void {
-    throw new Error("Method not implemented.");
-  }
+  update(): void {}
   draw(): void {
     createRect(
       this.canvasContext,

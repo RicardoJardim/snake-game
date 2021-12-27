@@ -1,17 +1,23 @@
 import { IGameObject } from "./IGameObject";
 import { createRect } from "./utils";
-
 export class Snake implements IGameObject {
   x: number;
   y: number;
+  die: boolean = false;
   tail: { x: number; y: number }[];
   size: number;
   rotateX: number;
   rotateY: number;
-  canvasContext;
-  canvas;
+  canvasContext: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
 
-  constructor(canvasContext, canvas, x, y, size) {
+  constructor(
+    canvasContext: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+    x: number,
+    y: number,
+    size: number
+  ) {
     this.canvasContext = canvasContext;
     this.canvas = canvas;
     this.x = x;
@@ -23,25 +29,10 @@ export class Snake implements IGameObject {
   }
   update(): void {
     this.move();
+    this.checkHitWall();
+    this.checkHitSnake();
   }
   draw(): void {
-    createRect(
-      this.canvasContext,
-      0,
-      0,
-      this.canvas.width,
-      this.canvas.height,
-      "black"
-    );
-    createRect(
-      this.canvasContext,
-      0,
-      0,
-      this.canvas.width,
-      this.canvas.height,
-      ""
-    );
-
     for (let i = 0; i < this.tail.length; i++) {
       createRect(
         this.canvasContext,
@@ -52,14 +43,6 @@ export class Snake implements IGameObject {
         "white"
       );
     }
-
-    this.canvasContext.font = "20px Arial";
-    this.canvasContext.fillStyle = "#00FF42";
-    this.canvasContext.fillText(
-      "Score: " + (this.tail.length - 1),
-      this.canvas.width - 120,
-      18
-    );
   }
 
   private move() {
@@ -89,5 +72,27 @@ export class Snake implements IGameObject {
 
     this.tail.shift();
     this.tail.push(newRect);
+  }
+
+  private checkHitWall(): void {
+    let headTail = this.tail[this.tail.length - 1];
+
+    if (headTail.x == -this.size) {
+      headTail.x = this.canvas.width - this.size;
+    } else if (headTail.x == this.canvas.width) {
+      headTail.x = 0;
+    } else if (headTail.y == -this.size) {
+      headTail.y = this.canvas.height - this.size;
+    } else if (headTail.y == this.canvas.height) {
+      headTail.y = 0;
+    }
+  }
+
+  private checkHitSnake(): void {
+    let head = this.tail[this.tail.length - 1];
+
+    if (this.tail.filter((e) => e.x == head.x && e.y == head.y).length > 1) {
+      this.die = true;
+    }
   }
 }

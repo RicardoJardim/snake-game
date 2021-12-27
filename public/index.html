@@ -1,31 +1,23 @@
 <html>
   <head>
     <title>Snake Game</title>
+    <link rel="stylesheet" href="./css/main.css" />
   </head>
 
-  <body style="display: flex; justify-content: center; font: 20px Arial">
-    <div id="container" style="margin-top: 5em">
-      <div
-        style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          width: 400px;
-        "
-      >
-        <span style="padding: 15px"> Snake Game </span>
-        <span style="padding: 15px"> Score <span id="score"> 0 </span> </span>
+  <body class="MainContainer">
+    <div style="margin-top: 5em">
+      <div class="RowContainer">
+        <span class="Padd_15"> Snake Game </span>
+        <span class="Padd_15"> Score <span id="score"> 0 </span> </span>
       </div>
+
       <canvas id="canvas" width="400" height="400"></canvas>
-      <div style="display: flex; flex-direction: row; width: 400px">
-        <button
-          onclick="startgame(this)"
-          style="margin: 15px; padding: 5px 15px; font: 14px Arial"
-        >
-          Start
-        </button>
+
+      <div class="RowContainer">
+        <button id="btn">Start</button>
+        <span class="Padd_15"> Max Score <span id="scoreMax"> 0 </span> </span>
       </div>
     </div>
-    <script src="./main.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
